@@ -1,0 +1,45 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_DB_URL}
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${OAUTH_GOOGLE_ID}
+            clientSecret: ${OAUTH_GOOGLE_SECRET}
+            scope:
+              - email
+              - profile
+          facebook:
+            clientId: ${OAUTH_FACEBOOK_ID}
+            clientSecret: ${OAUTH_FACEBOOK_SECRET}
+            scope:
+              - email
+              - public_profile
+
+#logging
+logging:
+  level:
+    org:
+      springframework:
+        data: debug
+    error: trace
+
+#docs
+springdoc:
+  version: '1.0.0'
+  api-docs:
+    path: /api/docs
+
+app:
+  auth:
+    tokenSecret: ${OAUTH_EMAIL_SECRET}
+    tokenExpirationMsec: ${OAUTH_EMAIL_EXPIRATION}
+  oauth2:
+    authorizedRedirectUrls:
+      - ${OAUTH_URI_WEB}
+      - ${OAUTH_URI_ANDROID}
+      - ${OAUTH_URI_IOS}
