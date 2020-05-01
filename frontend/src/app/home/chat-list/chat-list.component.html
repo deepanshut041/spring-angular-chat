@@ -1,0 +1,16 @@
+<nb-card>
+  <nb-card-header>
+    <nb-user [name]="'Deepanshu Tyagi'" size="large" showTitle=false
+      picture="https://via.placeholder.com/100/4479e7/ffffff?Text=IMG">
+    </nb-user>
+  </nb-card-header>
+  <nb-card-body>
+      <input nbInput fullWidth name="search" placeholder="Search">
+  </nb-card-body>
+  <nb-list>
+    <nb-list-item *ngFor="let user of users">
+      <nb-user [name]="user.name" [title]="user.title">
+      </nb-user>
+    </nb-list-item>
+  </nb-list>
+</nb-card>

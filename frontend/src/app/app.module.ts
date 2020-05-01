@@ -9,10 +9,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from "./auth/auth.module";
 
 import { AppComponent } from './app.component';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +23,7 @@ import { AppComponent } from './app.component';
     NbEvaIconsModule,
     AppRoutingModule,
     AuthModule,
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

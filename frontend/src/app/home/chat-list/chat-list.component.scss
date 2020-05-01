@@ -1,0 +1,11 @@
+nb-card{
+    padding: 0 !important;
+    height: 100%;
+
+    nb-card-body{
+        overflow: unset;
+    }
+    nb-list{
+        height: 60vh;
+    }
+}
