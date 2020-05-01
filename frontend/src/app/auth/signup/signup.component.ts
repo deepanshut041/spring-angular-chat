@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
 
+  loading: Boolean = false
+
   constructor() { }
 
   ngOnInit(): void {

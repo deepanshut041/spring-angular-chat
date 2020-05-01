@@ -18,6 +18,8 @@ export class SigninComponent implements OnInit {
   socialLinks: [];
   rememberMe = false;
 
+  loading: Boolean = false
+
 
   constructor() { }
 

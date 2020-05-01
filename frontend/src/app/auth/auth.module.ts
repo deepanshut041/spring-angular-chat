@@ -7,11 +7,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { TokenComponent } from './token/token.component';
 
 
 
 @NgModule({
-  declarations: [AuthComponent, SignupComponent, SigninComponent, ForgotPasswordComponent, ResetPasswordComponent],
+  declarations: [AuthComponent, SignupComponent, SigninComponent, ForgotPasswordComponent, ResetPasswordComponent, TokenComponent],
   imports: [
     CommonModule, AuthRoutingModule, SharedModule
   ]

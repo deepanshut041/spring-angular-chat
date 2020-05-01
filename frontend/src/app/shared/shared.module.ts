@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbLayoutModule, NbCardModule, NbAlertModule, NbInputModule, NbCheckboxModule, NbFormFieldModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import { NbLayoutModule, NbCardModule, NbAlertModule, NbInputModule, NbCheckboxModule, NbFormFieldModule, NbButtonModule, NbIconModule, NbSpinnerComponent, NbSpinnerModule, NbUserModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 
@@ -16,7 +16,9 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbFormFieldModule,
     NbCheckboxModule,
     NbButtonModule,
-    NbIconModule
+    NbIconModule,
+    NbSpinnerModule,
+    NbUserModule
   ], 
   exports: [
     NbLayoutModule,
@@ -26,7 +28,9 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbFormFieldModule,
     NbCheckboxModule,
     NbButtonModule,
-    NbIconModule
+    NbIconModule,
+    NbSpinnerModule,
+    NbUserModule
   ]
 })
 export class SharedModule { }

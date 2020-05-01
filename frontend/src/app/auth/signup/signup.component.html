@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card [nbSpinner]="loading" nbSpinnerStatus="primary">
     <nb-card-header>
         <h3 id="title" class="text-center">Sign Up</h3>
     </nb-card-header>
@@ -28,7 +28,7 @@
                 <input nbInput fullWidth name="password" id="input-cpassword" type="password" placeholder="Confirm Password" fieldSize="large">
             </div>
 
-            <button nbButton fullWidth outline status="basic" size="large">
+            <button nbButton fullWidth outline status="primary" size="large">
                 Sign Up
             </button>
         </form>

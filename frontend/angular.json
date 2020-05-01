@@ -29,7 +29,10 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/@nebular/theme/styles/prebuilt/dark.css",
+              "node_modules/@nebular/theme/styles/prebuilt/dark.scss",
+              "node_modules/@nebular/theme/styles/prebuilt/corporate.scss",
+              "node_modules/@nebular/theme/styles/prebuilt/cosmic.scss",
+              "node_modules/@nebular/theme/styles/prebuilt/default.scss",
               "src/styles.scss"
             ],
             "scripts": [
