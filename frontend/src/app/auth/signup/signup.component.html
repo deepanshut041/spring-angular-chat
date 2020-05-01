@@ -1,0 +1,41 @@
+<nb-card>
+    <nb-card-header>
+        <h3 id="title" class="text-center">Sign Up</h3>
+    </nb-card-header>
+    <nb-card-body>
+        <form>
+            <div class="form-control-group mb-3">
+                <label class="label" for="input-email">Email address:</label>
+                <input nbInput fullWidth name="email" id="input-email" placeholder="Email address" fieldSize="large">
+            </div>
+
+            <div class="form-control-group mb-3">
+                <label class="label" for="input-name">Full Name:</label>
+                <input nbInput fullWidth name="name" id="input-name" placeholder="Full Name" fieldSize="large">
+            </div>
+
+            <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-password">Password:</label>
+                </span>
+                <input nbInput fullWidth name="password" id="input-password" type="password" placeholder="Password" fieldSize="large">
+            </div>
+
+            <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-cpassword">Confirm Password:</label>
+                </span>
+                <input nbInput fullWidth name="password" id="input-cpassword" type="password" placeholder="Confirm Password" fieldSize="large">
+            </div>
+
+            <button nbButton fullWidth outline status="basic" size="large">
+                Sign Up
+            </button>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <p class="another-action text-center" aria-label="Register">
+            Already have an account? <a class="text-link" routerLink="../signin">Sigin</a>
+        </p>
+    </nb-card-footer>
+</nb-card>

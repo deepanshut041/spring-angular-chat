@@ -1,0 +1,57 @@
+<nb-card>
+    <nb-card-header>
+        <h3 id="title" class="text-center">Sign In</h3>
+    </nb-card-header>
+    <nb-card-body>
+        <form>
+            <div class="form-control-group mb-3">
+                <label class="label" for="input-email">Email address:</label>
+                <input nbInput fullWidth name="email" id="input-email" placeholder="Email address" fieldSize="large">
+                <!-- <ng-container >
+                    <p class="caption status-danger">
+                        Email is required!
+                    </p>
+                    <p class="caption status-danger">
+                        Email should be the real one!
+                    </p>
+                </ng-container> -->
+            </div>
+
+            <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-password">Password:</label>
+                </span>
+                <input nbInput fullWidth name="password" id="input-password" type="password" placeholder="Password" fieldSize="large">
+                <!-- <ng-container>
+                    <p class="caption status-danger">
+                        Password is required!
+                    </p>
+                    <p class="caption status-danger">
+                        Password should contain from 8 to 26 characters
+                    </p>
+                </ng-container> -->
+                <p class="text-right">
+                    <a class="caption-2 text-primary" routerLink="../request-password">Forgot Password?</a>
+                </p>
+            </div>
+
+            <button nbButton fullWidth outline status="basic" size="large">
+                Sign In
+            </button>
+        </form>
+        <p class="text-center mt-3 ">or Continue with </p>
+        <section class="text-center">
+            <button nbButton outline class="text-control">
+                <nb-icon icon="google"></nb-icon>Google
+            </button>
+            <button nbButton outline class="ml-3">
+                <nb-icon icon="facebook"></nb-icon> Facebook
+            </button>
+        </section>
+    </nb-card-body>
+    <nb-card-footer>
+        <p class="another-action text-center" aria-label="Register">
+            Don't have an account? <a class="text-link" routerLink="../signup">Register</a>
+        </p>
+    </nb-card-footer>
+</nb-card>
