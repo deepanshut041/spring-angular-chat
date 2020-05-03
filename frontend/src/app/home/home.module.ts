@@ -8,8 +8,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 
 import { HomeRoutingModule } from './home-routing.module';
-import { NbSidebarService } from '@nebular/theme';
+import { NbSidebarService, NbMenuService } from '@nebular/theme';
 import { ChatListComponent } from './chat-list/chat-list.component';
+import { UserService } from '../_services/user.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { ChatListComponent } from './chat-list/chat-list.component';
     CommonModule, HomeRoutingModule, SharedModule,
   ],
   providers:[
-    NbSidebarService
+    NbSidebarService, NbMenuService, UserService
   ]
 })
 export class HomeModule { }

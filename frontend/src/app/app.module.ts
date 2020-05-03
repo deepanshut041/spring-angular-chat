@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbMenuModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
     BrowserModule,
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'corporate' }),
+    NbMenuModule.forRoot(),
     NbLayoutModule,
     NbEvaIconsModule,
     AppRoutingModule,

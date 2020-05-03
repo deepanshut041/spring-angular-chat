@@ -9,6 +9,7 @@ import { SignInResponse } from '../_dtos/auth/SignInResponse';
 import { SignInRequest } from '../_dtos/auth/SignInRequest';
 import { SignUpRequest } from '../_dtos/auth/SignUpRequest';
 import { ApiResponse } from '../_dtos/common/ApiResponse';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
