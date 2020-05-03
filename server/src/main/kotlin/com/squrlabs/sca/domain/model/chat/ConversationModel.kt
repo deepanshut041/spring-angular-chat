@@ -8,7 +8,6 @@ data class ConversationModel(
         val user2: String,
         val isBlocked: Boolean,
         val blockerId: String,
-        val groupId: String,
         val createdAt: Date,
         val updatedAt: Date
 )

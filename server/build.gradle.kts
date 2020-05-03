@@ -38,7 +38,7 @@ dependencies {
 	implementation("org.springframework.security:spring-security-oauth2-jose")
 
 	// Websocket
-//	implementation("org.springframework.boot:spring-boot-starter-websocket")
+	implementation("org.springframework.boot:spring-boot-starter-websocket")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

@@ -10,7 +10,7 @@ data class UserMessageModel(
         val mediaUrl: String,
         val contentType: ContentType,
         val createdAt: Date,
-        val receivedBy: Boolean,
-        val readBy: Boolean,
-        val pending: Boolean
+        val updatedAt: Date,
+        val receivedAt: Date? = null,
+        val readAt: Date? = null
 )
