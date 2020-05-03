@@ -3,32 +3,32 @@
         <h3 id="title" class="text-center">Sign In</h3>
     </nb-card-header>
     <nb-card-body>
-        <form>
+        <form [formGroup]="signInFrom" (ngSubmit)="login()">
             <div class="form-control-group mb-3">
                 <label class="label" for="input-email">Email address:</label>
-                <input nbInput fullWidth name="email" id="input-email" placeholder="Email address" fieldSize="large">
+                <input nbInput fullWidth id="input-email" type="email" placeholder="Email address" fieldSize="large" formControlName="email">
             </div>
 
             <div class="form-control-group mb-3">
                 <span class="label-with-link">
                     <label class="label" for="input-password">Password:</label>
                 </span>
-                <input nbInput fullWidth name="password" id="input-password" type="password" placeholder="Password" fieldSize="large">
+                <input nbInput fullWidth id="input-password" type="password" placeholder="Password" fieldSize="large" formControlName="password">
                 <p class="text-right">
                     <a class="caption-2 text-primary" routerLink="../forgot">Forgot Password?</a>
                 </p>
             </div>
 
-            <button nbButton fullWidth outline status="primary" size="large">
+            <button nbButton fullWidth outline status="primary" size="large" [disabled]="!signInFrom.valid">
                 Sign In
             </button>
         </form>
         <p class="text-center mt-3">or Continue with </p>
         <section class="text-center">
-            <button nbButton outline class="text-control" status="primary">
-                <nb-icon icon="google"></nb-icon>Google
+            <button nbButton outline class="text-control" (click)="google()" status="primary">
+                <nb-icon icon="google" ></nb-icon>Google
             </button>
-            <button nbButton outline class="ml-3" status="primary">
+            <button nbButton outline class="ml-3" (click)="facebook()" status="primary">
                 <nb-icon icon="facebook"></nb-icon >Facebook
             </button>
         </section>

@@ -2,18 +2,11 @@
     <nb-card-header>
         <h3 id="title" class="text-center">Profile</h3>
     </nb-card-header>
-    <nb-card-body>
+    <nb-card-body *ngIf="profile">
         <form>
-            <img src="https://via.placeholder.com/200/4479e7/ffffff?Text=IMG" class="img-fluid rounded-circle mx-auto d-block"/>
-            <div class="form-control-group mb-3 mt-3">
-                <span class="label-with-link">
-                    <label class="label" for="input-password">Full Name</label>
-                </span>
-                <input nbInput fullWidth name="name" id="input-password" type="name" placeholder="Full Name"
-                    fieldSize="large">
-            </div>
-
-            <button nbButton fullWidth outline status="primary" size="large" class="mt-3">
+            <img src="{{profile.imgUrl}}" class="img-fluid rounded-circle mx-auto d-block pr-5 pl-5"/>
+            <h3 class="text-center mt-3 mb-3">{{profile.name}}</h3>
+            <button nbButton fullWidth outline status="primary" (click)="continue()" size="large" class="mt-3">
                 Continue
             </button>
         </form>

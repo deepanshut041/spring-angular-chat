@@ -1,41 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {  Observable } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
 
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
+import { SignInResponse } from '../_dtos/auth/SignInResponse';
+import { SignInRequest } from '../_dtos/auth/SignInRequest';
+import { SignUpRequest } from '../_dtos/auth/SignUpRequest';
+import { ApiResponse } from '../_dtos/common/ApiResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  public token: Observable<String>;
-  private tokenSubject: BehaviorSubject<String>;
-
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
-    this.tokenSubject = new BehaviorSubject<String>(tokenStorage.getToken())
-    this.token = this.tokenSubject.asObservable();
+    
   }
 
-  getToken(): String {
-    this.tokenSubject.next(this.tokenStorage.getToken())
-    return this.tokenSubject.value;
+  getToken(): string {
+    return this.tokenStorage.getToken()
   }
 
-  login(credentials): Observable<any> {
-    return this.http.post(`${environment.DOMAIN}/api/account/signin`, credentials, this.httpOptions).pipe(map(user => {
-      this.tokenStorage.saveToken(user['accessToken']); return user
-    }));
+  setToken(token:string){
+    this.tokenStorage.saveToken(token)
   }
 
-  register(user): Observable<any> {
-    return this.http.post(`${environment.DOMAIN}/api/account/signup`, user, this.httpOptions);
+  login(model: SignInRequest): Observable<SignInResponse> {
+    return this.http.post(`${environment.DOMAIN}/api/account/signin`, model, this.httpOptions)
+      .pipe(map((response: SignInResponse) => {
+        console.log("here")
+        this.tokenStorage.saveToken(response.accessToken)
+        return response
+      }));
+  }
+
+  register(model: SignUpRequest): Observable<ApiResponse> {
+    return this.http.post(`${environment.DOMAIN}/api/account/signup`, model, this.httpOptions) as Observable<ApiResponse>;
   }
 
   logout() {
