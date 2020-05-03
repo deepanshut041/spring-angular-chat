@@ -37,7 +37,6 @@ class AccountController(
 ) {
 
     @PostMapping("/signin")
-    @Operation()
     fun authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<AuthResponse>? {
         val authentication: Authentication = authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(

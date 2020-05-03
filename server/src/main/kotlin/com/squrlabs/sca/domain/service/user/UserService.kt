@@ -6,6 +6,7 @@ import com.squrlabs.sca.domain.model.user.UserModel
 import com.squrlabs.sca.util.ResourceNotFoundException
 import com.squrlabs.sca.util.auth.util.UserPrincipal
 import com.squrlabs.sca.util.toNullable
+import com.squrlabs.sca.web.dto.user.UserProfile
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -27,12 +28,21 @@ class UserServiceImpl(
         throw ResourceNotFoundException("User", "id", id)
     }
 
+
+
     @Throws(UsernameNotFoundException::class)
     override fun getUserByEmail(email: String): UserDetails? {
        userRepository.findByEmail(email).map(UserEntityMapper::to).toNullable()?.let {
             return UserPrincipal.create(it, emptyMap(), rolesToAuthority(it.roles))
         }
         throw ResourceNotFoundException("User", "email", email)
+    }
+
+    override fun getUserProfile(id: String): UserProfile {
+        userRepository.findById(id).map(UserEntityMapper::to).toNullable()?.let {
+            return UserProfile(it.email, it.name, it.imgUrl)
+        }
+        throw ResourceNotFoundException("User", "id", id)
     }
 
     override fun saveUser(model: UserModel): UserModel {
@@ -54,6 +64,7 @@ interface UserService: UserDetailsService {
     fun getUserByEmail(email: String): UserDetails?
     fun saveUser(model: UserModel): UserModel
     fun existsByEmail(email: String): Boolean
+    fun getUserProfile(id: String): UserProfile
 }
 
 fun rolesToAuthority(roles: List<String>): Collection<GrantedAuthority>{
