@@ -13,7 +13,6 @@ object DateTimeUtil {
         }?: run{
             "2000-01-01T00:00:00.000+00:00"
         }
-
         return try {
             Date.from(ZonedDateTime.parse( parsedStr, DateTimeFormatter.ISO_DATE_TIME).toInstant())
         } catch (ex: DateTimeParseException){
