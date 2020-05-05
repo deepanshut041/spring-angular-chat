@@ -13,6 +13,11 @@ import { ChatListComponent } from './chat-list/chat-list.component';
 import { UserService } from '../_services/user.service';
 import { ChatService } from '../_services/chat.service';
 import { NotificationService } from '../_services/notification.service';
+import { DataService } from '../_services/data.service';
+import { LoadingComponent } from './loading/loading.component';
+import { ChatDetailComponent } from './chat-detail/chat-detail.component';
+import { ChatBannerComponent } from './chat-banner/chat-banner.component';
+import { NewChatComponent } from './chat-list/new-chat/new-chat.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +25,17 @@ import { NotificationService } from '../_services/notification.service';
     ChatComponent,
     ProfileComponent,
     SettingsComponent,
-    ChatListComponent
+    ChatListComponent,
+    LoadingComponent,
+    ChatDetailComponent,
+    ChatBannerComponent,
+    NewChatComponent
   ],
   imports: [
     CommonModule, HomeRoutingModule, SharedModule,
   ],
   providers:[
-    NbSidebarService, NbMenuService, UserService, ChatService, NotificationService
+    DataService, NbMenuService, UserService, ChatService, NotificationService
   ]
 })
 export class HomeModule { }

@@ -11,7 +11,7 @@ export class AuthComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {
     if(this.authService.getToken()){
-      this.router.navigateByUrl("/home")
+      this.router.navigateByUrl("/")
     }
 
    }

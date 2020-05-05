@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NbMenuService } from '@nebular/theme';
+import { NbMenuService, NbDialogService } from '@nebular/theme';
 import { filter, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/_services/user.service';
 import { UserProfile } from 'src/app/_dtos/user/UserProfile';
+import { ChatService } from 'src/app/_services/chat.service';
+import { Observable } from 'rxjs';
+import { FriendProfile } from 'src/app/_dtos/chat/FriendProfile';
+import { NewChatComponent } from './new-chat/new-chat.component';
 
 @Component({
   selector: 'home-chat-list',
@@ -12,7 +16,7 @@ import { UserProfile } from 'src/app/_dtos/user/UserProfile';
 })
 export class ChatListComponent implements OnInit {
 
-  chatList: any[] = []
+  friends: Observable<FriendProfile[]>
   menu = [
     { title: 'Profile', icon: 'person-outline' },
     { title: 'New Chat', icon: 'person-add-outline' },
@@ -23,12 +27,13 @@ export class ChatListComponent implements OnInit {
 
   profile: UserProfile
 
-  constructor(private menuService: NbMenuService, private router: Router, private userService: UserService) {
+  constructor(private menuService: NbMenuService, private router: Router, private dialogService: NbDialogService,
+    private userService: UserService, private chatService: ChatService, private route: ActivatedRoute) {
     this.profile = this.userService.getProfile()
+    this.friends = this.chatService.getFriends()
   }
 
   ngOnInit(): void {
-    this.dummyUsers()
     this.menuListener()
   }
 
@@ -44,7 +49,12 @@ export class ChatListComponent implements OnInit {
             this.router.navigateByUrl("/profile")
             break;
           case 'New Chat':
-
+            this.dialogService.open(NewChatComponent).onClose.subscribe((email) => {
+              this.chatService.createFriend(email).subscribe(
+                (r) => { console.log(r) },
+                (err) => { console.log(err) }
+              )
+            })
             break;
           case 'New Group':
 
@@ -62,17 +72,8 @@ export class ChatListComponent implements OnInit {
       })
   }
 
-  dummyUsers() {
-    let users = []
-    for (let i = 0; i < 20; i++) {
-      users.push(
-        {
-          "name": `User ${i}`,
-          "title": `Sample title ${i}`
-        }
-      )
-      this.chatList = users
-    }
+  chatClicked(id: String){
+    this.router.navigate([id], { relativeTo: this.route })
   }
 
 }

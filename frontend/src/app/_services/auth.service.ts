@@ -10,6 +10,7 @@ import { SignInRequest } from '../_dtos/auth/SignInRequest';
 import { SignUpRequest } from '../_dtos/auth/SignUpRequest';
 import { ApiResponse } from '../_dtos/common/ApiResponse';
 import { UserService } from './user.service';
+import { UserProfile } from '../_dtos/user/UserProfile';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,8 @@ export class AuthService {
   login(model: SignInRequest): Observable<SignInResponse> {
     return this.http.post(`${environment.DOMAIN}/api/account/signin`, model, this.httpOptions)
       .pipe(map((response: SignInResponse) => {
-        console.log("here")
         this.tokenStorage.saveToken(response.accessToken)
+        this.tokenStorage.saveUser(new UserProfile(response.email, response.name, response.imageUrl))
         return response
       }));
   }

@@ -1,9 +1,10 @@
-<nb-chat title="Nebular Conversational UI">
-    <nb-chat-message *ngFor="let msg of messages" [type]="msg.type" [message]="msg.text" [reply]="msg.reply"
-        [sender]="msg.user.name" [date]="msg.date" [files]="msg.files" [quote]="msg.quote" [latitude]="msg.latitude"
-        [longitude]="msg.longitude" [avatar]="msg.user.avatar">
-    </nb-chat-message>
-
-    <nb-chat-form [dropFiles]="true">
-    </nb-chat-form>
-</nb-chat>
+<div class="container h-100">
+    <div class="row no-gutters row-eq-height justify-content-center h-100">
+        <div class="col-md-5 col-lg-4 h-100">
+            <home-chat-list></home-chat-list>
+        </div>
+        <div class="col-md-7 col-lg-8 h-100 d-none d-md-block">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

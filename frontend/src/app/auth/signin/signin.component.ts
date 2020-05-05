@@ -15,7 +15,7 @@ export class SigninComponent implements OnInit {
 
   loading: Boolean = false
   signInFrom: FormGroup
-  redirect = "/home"
+  redirect = "/"
 
   constructor( private _authService: AuthService, private fb: FormBuilder, private router: Router) { 
     this.signInFrom = this.fb.group({

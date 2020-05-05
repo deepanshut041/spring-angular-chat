@@ -4,10 +4,24 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AuthGuard } from '../_helpers/auth.guard';
+import { LoadingComponent } from './loading/loading.component';
+import { ChatComponent } from './chat/chat.component';
+import { ChatDetailComponent } from './chat-detail/chat-detail.component';
+import { ChatBannerComponent } from './chat-banner/chat-banner.component';
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-  {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]}
+  {
+    path: '', component: HomeComponent, canActivate: [AuthGuard], children: [
+      {
+        path: 'chat', component: ChatComponent, children: [
+          { path: ':id', component: ChatDetailComponent },
+          { path: '', component: ChatBannerComponent }
+        ]
+      },
+      { path: 'loading', component: LoadingComponent },
+      { path: 'settings', component: SettingsComponent }
+    ]
+  }
 ];
 
 @NgModule({

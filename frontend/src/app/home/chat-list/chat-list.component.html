@@ -2,7 +2,7 @@
   <nb-card-header>
     <div class="row no-gutters align-items-center" *ngIf="profile">
       <div class="col-auto">
-        <img src="{{profile.imgUrl}}" class="img-fluid rounded-circle" width="50px">
+        <img src="{{profile.imgUrl}}" class="img-fluid rounded-circle" width="50px" appImgFallback/>
       </div>
       <div class="col">
         <h6 class="pl-3 pr-3">{{profile.name}}</h6>
@@ -16,8 +16,8 @@
     <input nbInput fullWidth name="search" placeholder="Search">
   </nb-card-body>
   <nb-list>
-    <nb-list-item *ngFor="let item of chatList">
-      <nb-user [name]="item.name" [title]="item.title">
+    <nb-list-item *ngFor="let friend of friends | async" (click)="chatClicked(friend.id)">
+      <nb-user [name]="friend.name" [title]="friend.lastMsg" [picture]="friend.imgUrl">
       </nb-user>
     </nb-list-item>
   </nb-list>
