@@ -3,14 +3,12 @@ package com.squrlabs.sca.web.controller.chat
 import com.squrlabs.sca.domain.model.chat.ContentType
 import com.squrlabs.sca.domain.service.chat.UserConversationService
 import com.squrlabs.sca.domain.service.chat.UserMessageService
-import com.squrlabs.sca.domain.service.user.UserService
-import com.squrlabs.sca.util.ApiResponse
 import com.squrlabs.sca.util.BadRequestException
 import com.squrlabs.sca.util.DateTimeUtil
 import com.squrlabs.sca.util.auth.util.UserPrincipal
 import com.squrlabs.sca.web.controller.chat.UserChatController.Companion.USER_CHAT_BASE_URI
-import com.squrlabs.sca.web.dto.chat.FriendProfileDto
-import com.squrlabs.sca.web.dto.chat.MessageDto
+import com.squrlabs.sca.web.dto.chat.FriendProfileResponse
+import com.squrlabs.sca.web.dto.chat.MessageResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -31,49 +29,49 @@ class UserChatController(
 ) {
 
     @GetMapping
-    fun getFriends(@RequestParam("from", required = false) from: String?): ResponseEntity<List<FriendProfileDto>> {
+    fun getFriends(@RequestParam("from", required = false) from: String?): ResponseEntity<List<FriendProfileResponse>> {
         val user = getCurrentUser()
         val updatedAfter = DateTimeUtil.getDateFromString(from)
         val friends = userConversationService.getConversations(user.id, updatedAfter)
-        return ResponseEntity.ok(friends.map { FriendProfileDto(it.id, it.email, it.name, it.imgUrl, it.isBlocked, it.blockedBy) })
+        return ResponseEntity.ok(friends.map { FriendProfileResponse(it.id, it.email, it.name, it.imgUrl, it.isBlocked, it.blockedBy) })
     }
 
     @GetMapping("/new")
-    fun startConversation(@RequestParam("email", required = true) email: String?): ResponseEntity<FriendProfileDto>{
+    fun startConversation(@RequestParam("email", required = true) email: String?): ResponseEntity<FriendProfileResponse>{
         val user = getCurrentUser()
         email?.let {
             val friend = userConversationService.newConversation(user, it)
-            return  ResponseEntity.ok( FriendProfileDto(friend.id, friend.email, friend.name, friend.imgUrl, friend.isBlocked, friend.blockedBy))
+            return  ResponseEntity.ok( FriendProfileResponse(friend.id, friend.email, friend.name, friend.imgUrl, friend.isBlocked, friend.blockedBy))
         }?: run{
             throw BadRequestException("Sorry no email provides")
         }
     }
 
     @GetMapping("/{cid}/block")
-    fun blockUser(@PathVariable("cid") id: String): ResponseEntity<FriendProfileDto>{
+    fun blockUser(@PathVariable("cid") id: String): ResponseEntity<FriendProfileResponse>{
         val user = getCurrentUser()
         val friend = userConversationService.blockConversation(id, user)
-        return ResponseEntity.ok( FriendProfileDto(friend.id, friend.email, friend.name, friend.imgUrl, friend.isBlocked, friend.blockedBy))
+        return ResponseEntity.ok( FriendProfileResponse(friend.id, friend.email, friend.name, friend.imgUrl, friend.isBlocked, friend.blockedBy))
     }
 
     @GetMapping("/{cid}/unblock")
-    fun unblockUser(@PathVariable("cid") id: String): ResponseEntity<FriendProfileDto>{
+    fun unblockUser(@PathVariable("cid") id: String): ResponseEntity<FriendProfileResponse>{
         val user = getCurrentUser()
         val friend = userConversationService.unblockConversation(id, user)
-        return ResponseEntity.ok( FriendProfileDto(friend.id, friend.email, friend.name, friend.imgUrl, friend.isBlocked, friend.blockedBy))
+        return ResponseEntity.ok( FriendProfileResponse(friend.id, friend.email, friend.name, friend.imgUrl, friend.isBlocked, friend.blockedBy))
     }
 
     @GetMapping("/{cid}/messages")
     fun getMessages(
             @PathVariable("cid") id: String,
             @RequestParam("from", required = false) from: String?
-    ): ResponseEntity<List<MessageDto>>{
+    ): ResponseEntity<List<MessageResponse>>{
         val user = getCurrentUser()
         val updatedAfter = DateTimeUtil.getDateFromString(from)
         val messages = userMessageService.getMessages(id, user.id, updatedAfter)
 
         return  ResponseEntity.ok(messages.map {
-            MessageDto(it.id, it.senderId, it.conversationId, it.content, it.mediaUrl, it.contentType, it.createdAt, it.updatedAt, it.receivedAt, it.readAt)
+            MessageResponse(it.id, it.senderId, it.conversationId, it.content, it.mediaUrl, it.contentType, it.createdAt, it.updatedAt, it.receivedAt, it.readAt)
         })
     }
 
@@ -83,7 +81,7 @@ class UserChatController(
             @RequestParam("file", required = false) file: MultipartFile?,
             @RequestParam("content", required = false) content: String = "",
             @RequestParam("content-type", required = true) contentStr: String
-    ): ResponseEntity<MessageDto>{
+    ): ResponseEntity<MessageResponse>{
         val user = getCurrentUser()
         val contentType = ContentType.values().firstOrNull { it.name == contentStr.toUpperCase() }
         contentType?.let {
@@ -92,14 +90,14 @@ class UserChatController(
                 try{
                     Files.copy(file.inputStream, filename, StandardCopyOption.REPLACE_EXISTING)
                     val msg = userMessageService.createMessage(id, user.id, content, filename.toString(), contentType)
-                    return ResponseEntity.ok(MessageDto(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
+                    return ResponseEntity.ok(MessageResponse(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
                             msg.createdAt, msg.updatedAt, msg.receivedAt, msg.readAt))
                 } catch (e: IOException){
                     throw BadRequestException("Invalid file")
                 }
             }?: run {
                 val msg = userMessageService.createMessage(id, user.id, content, "", ContentType.TEXT)
-                return ResponseEntity.ok(MessageDto(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
+                return ResponseEntity.ok(MessageResponse(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
                         msg.createdAt, msg.updatedAt, msg.receivedAt, msg.readAt))
             }
         }?: run {
@@ -112,10 +110,10 @@ class UserChatController(
     fun readMessage(
             @PathVariable("cid") convId: String,
             @PathVariable("mid") msgId: String
-    ): ResponseEntity<MessageDto>{
+    ): ResponseEntity<MessageResponse>{
         val user = getCurrentUser()
         val msg = userMessageService.updateMessages(msgId, convId, user.id, false)
-        return ResponseEntity.ok(MessageDto(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
+        return ResponseEntity.ok(MessageResponse(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
                 msg.createdAt, msg.updatedAt, msg.receivedAt, msg.readAt))
     }
 
@@ -123,10 +121,10 @@ class UserChatController(
     fun receivedMessage(
             @PathVariable("cid") convId: String,
             @PathVariable("mid") msgId: String
-    ): ResponseEntity<MessageDto>{
+    ): ResponseEntity<MessageResponse>{
         val user = getCurrentUser()
         val msg = userMessageService.updateMessages(msgId, convId, user.id, true)
-        return ResponseEntity.ok(MessageDto(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
+        return ResponseEntity.ok(MessageResponse(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
                 msg.createdAt, msg.updatedAt, msg.receivedAt, msg.readAt))
     }
 

@@ -1,6 +1,6 @@
 package com.squrlabs.sca.web.dto.chat
 
-data class FriendProfileDto(
+data class FriendProfileResponse(
         val id: String,
         val email: String,
         val name: String,
