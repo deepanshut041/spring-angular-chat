@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NbMenuService } from '@nebular/theme';
 import { filter, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/_services/auth.service';
 import { UserService } from 'src/app/_services/user.service';
 import { UserProfile } from 'src/app/_dtos/user/UserProfile';
 

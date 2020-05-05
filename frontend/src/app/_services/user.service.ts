@@ -6,9 +6,7 @@ import { map } from 'rxjs/operators';
 import { UserProfile } from '../_dtos/user/UserProfile';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserService {
 
   httpOptions = {

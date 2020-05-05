@@ -30,10 +30,13 @@ export class SigninComponent implements OnInit {
   login(){
     if(this.signInFrom.valid){
       let data = this.signInFrom.value
+      this.loading = true
       this._authService.login(new SignInRequest(data['email'], data['password'])).subscribe(
         (response: SignInResponse)=>{
           this.router.navigateByUrl(this.redirect)
+          this.loading = false
         },(err:any)=>{
+          this.loading = false
           console.log(err.error.message)
         }
       )

@@ -3,22 +3,22 @@
         <h3 id="title" class="text-center">Sign Up</h3>
     </nb-card-header>
     <nb-card-body>
-        <form>
+        <form [formGroup]="signUpFrom" (ngSubmit)="register()">
             <div class="form-control-group mb-3">
                 <label class="label" for="input-email">Email address:</label>
-                <input nbInput fullWidth name="email" id="input-email" placeholder="Email address" fieldSize="large">
+                <input nbInput fullWidth id="input-email" placeholder="Email address" fieldSize="large" formControlName="email">
             </div>
 
             <div class="form-control-group mb-3">
                 <label class="label" for="input-name">Full Name:</label>
-                <input nbInput fullWidth name="name" id="input-name" placeholder="Full Name" fieldSize="large">
+                <input nbInput fullWidth id="input-name" placeholder="Full Name" fieldSize="large" formControlName="name">
             </div>
 
             <div class="form-control-group mb-3">
                 <span class="label-with-link">
                     <label class="label" for="input-password">Password:</label>
                 </span>
-                <input nbInput fullWidth name="password" id="input-password" type="password" placeholder="Password" fieldSize="large">
+                <input nbInput fullWidth id="input-password" type="password" placeholder="Password" fieldSize="large" formControlName="password">
             </div>
 
             <div class="form-control-group mb-3">

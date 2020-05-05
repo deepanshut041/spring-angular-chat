@@ -11,6 +11,8 @@ import { HomeRoutingModule } from './home-routing.module';
 import { NbSidebarService, NbMenuService } from '@nebular/theme';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { UserService } from '../_services/user.service';
+import { ChatService } from '../_services/chat.service';
+import { NotificationService } from '../_services/notification.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import { UserService } from '../_services/user.service';
     CommonModule, HomeRoutingModule, SharedModule,
   ],
   providers:[
-    NbSidebarService, NbMenuService, UserService
+    NbSidebarService, NbMenuService, UserService, ChatService, NotificationService
   ]
 })
 export class HomeModule { }
