@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { FriendProfile } from '../_dtos/chat/FriendProfile';
 import { DataService } from './data.service';
 import { UserMessage } from '../_dtos/chat/UserMessage';
@@ -35,6 +35,15 @@ export class ChatService {
       }))
   }
 
+  fetchAllMessages(): Observable<any>{
+    console.log( )
+    return this.httpClient.post(`${environment.DOMAIN}/api/users/chat/messages`,
+    Array.from(this.dataService.getAllFriend().keys()), this.httpOptions)
+      .pipe(map((msgs: UserMessage[]) => {
+        this.dataService.updateUserMessages(msgs)
+      }))
+  }
+
   fetchMessages(covId: string): Observable<any> {
     return this.httpClient.get(`${environment.DOMAIN}/api/users/chat/${covId}/messages`, this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
@@ -44,6 +53,10 @@ export class ChatService {
 
   getFriends(): Observable<FriendProfile[]>{
     return this.dataService.getFriends()
+  }
+
+  getFriend(id: string): FriendProfile {
+    return this.dataService.getAllFriend().get(id)
   }
 
   getMessages(covId: string): Observable<UserMessage[]>{

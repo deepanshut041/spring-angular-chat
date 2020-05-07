@@ -13,7 +13,10 @@ export class LoadingComponent implements OnInit {
 
   ngOnInit(): void {
     this.chatService.fetchFriends().subscribe((output)=>{
-      this.chatService.updateFetch(100)
+      this.chatService.updateFetch(10)
+      this.chatService.fetchAllMessages().subscribe(v =>{
+        this.chatService.updateFetch(100)
+      })
     })
   }
 

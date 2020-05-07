@@ -63,4 +63,9 @@ export class DataService {
       })
     )
   }
+
+  getAllFriend(): Map<string,FriendProfile> {
+    return this._friends.value
+  }
+
 }

@@ -9,6 +9,7 @@ export class FriendProfile {
     lastMsgAt: Date
     unreadMsgs: number = 0
     updatedAt: Date
+    fetched: boolean = false
 
     constructor(id: string, email: string, name: string, imgUrl: string, isBlocked: boolean, blockedBy: string, updatedAt: string) {
         this.id = id
