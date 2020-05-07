@@ -38,11 +38,12 @@ class UserServiceImpl(
         throw ResourceNotFoundException("User", "email", email)
     }
 
-    override fun getUserProfile(id: String): UserProfile {
+    override fun getUserProfile(id: String): UserModel {
         userRepository.findById(id).map(UserEntityMapper::to).toNullable()?.let {
-            return UserProfile(it.email, it.name, it.imgUrl)
+            return it
+        }?: run{
+            throw ResourceNotFoundException("User", "id", id)
         }
-        throw ResourceNotFoundException("User", "id", id)
     }
 
     override fun saveUser(model: UserModel): UserModel {
@@ -64,7 +65,7 @@ interface UserService: UserDetailsService {
     fun getUserByEmail(email: String): UserDetails?
     fun saveUser(model: UserModel): UserModel
     fun existsByEmail(email: String): Boolean
-    fun getUserProfile(id: String): UserProfile
+    fun getUserProfile(id: String): UserModel
 }
 
 fun rolesToAuthority(roles: List<String>): Collection<GrantedAuthority>{
