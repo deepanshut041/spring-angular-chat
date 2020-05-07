@@ -33,13 +33,28 @@ export class ChatDetailComponent implements OnInit {
   }
   ngOnInit(): void {
     this.chatService.getMessages(this.friendId).subscribe(msgs => {
-      this.messages = msgs.map( msg => {
+      this.messages = msgs.map(msg => {
         let nm = new NbMessage(msg)
-        if(msg.senderId == this.myProfile.id) nm.updateUser(this.myProfile.name, this.myProfile.imgUrl, false)
-        else nm.updateUser(this.friendProfile.name, this.friendProfile.imgUrl, false)
+        if (msg.senderId == this.myProfile.id) nm.updateUser(this.myProfile.name, this.myProfile.imgUrl, false)
+        else nm.updateUser(this.friendProfile.name, this.friendProfile.imgUrl, true)
         return nm
       })
     })
+  }
+
+  sendMessage(event) {
+    const files = !event.files ? [] : event.files.map((file) => {
+      return {
+        url: file.src,
+        type: file.type,
+        icon: 'file-text-outline',
+      };
+    });
+
+    this.chatService.createMessageText(this.friendId, event.message).subscribe((v)=>{
+      console.log(v);
+    })
+    // this.chatService()
   }
 
 }

@@ -1,10 +1,10 @@
 export class UserProfile {
-    id: string = ""
+    id: string
     email: string
     name: string
     imgUrl: string
 
-    constructor(email: string, name: string, imgUrl: string, id: string =""){
+    constructor(id: string, email: string, name: string, imgUrl: string){
         this.email = email
         this.name = name
         this.imgUrl = imgUrl

@@ -37,7 +37,7 @@ export class DataService {
     msgs.forEach((msg, k) => {
       let friend = friends.get(msg.conversationId)
       if (friend.lastMsgAt < msg.createdAt) { friend.updateConv(msg.content, msg.createdAt) }
-      if (!msg.readAt) { friend.incrementUnread() }
+      // if (!msg.readAt) { friend.incrementUnread() }
     })
     this._friends.next(friends)
   }
@@ -47,7 +47,7 @@ export class DataService {
       map(m => {
         let msgs: UserMessage[] = []
         m.forEach((v, k) => { if (v.conversationId == covId) msgs.push(v) })
-        msgs.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+        // msgs.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
         return msgs
       })
     )

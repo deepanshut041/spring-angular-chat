@@ -88,33 +88,32 @@ class UserChatController(
         })
     }
 
-    @PostMapping("/{cid}/messages")
-    fun createMessage(
+    @PostMapping("/{cid}/messages/text")
+    fun createMessageText(
             @PathVariable("cid") id: String,
-            @RequestParam("file", required = false) file: MultipartFile?,
-            @RequestParam("content", required = false) content: String = "",
-            @RequestParam("content-type", required = true) contentStr: String
+            @RequestParam("content", required = false) content: String = ""
     ): ResponseEntity<MessageResponse>{
         val user = getCurrentUser()
-        val contentType = ContentType.values().firstOrNull { it.name == contentStr.toUpperCase() }
-        contentType?.let {
-            file?.let {
-                val filename = Path.of("chats", id, file.originalFilename)
-                try{
-                    Files.copy(file.inputStream, filename, StandardCopyOption.REPLACE_EXISTING)
-                    val msg = userMessageService.createMessage(id, user.id, content, filename.toString(), contentType)
-                    return ResponseEntity.ok(MessageResponse(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
-                            msg.createdAt, msg.updatedAt, msg.receivedAt, msg.readAt))
-                } catch (e: IOException){
-                    throw BadRequestException("Invalid file")
-                }
-            }?: run {
-                val msg = userMessageService.createMessage(id, user.id, content, "", ContentType.TEXT)
-                return ResponseEntity.ok(MessageResponse(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
-                        msg.createdAt, msg.updatedAt, msg.receivedAt, msg.readAt))
-            }
-        }?: run {
-            throw BadRequestException("Content Type invalid")
+        val msg = userMessageService.createMessage(id, user.id, content, "", ContentType.TEXT)
+        return ResponseEntity.ok(MessageResponse(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
+                msg.createdAt, msg.updatedAt, msg.receivedAt, msg.readAt))
+    }
+
+    @PostMapping("/{cid}/messages/file")
+    fun createMessageFile(
+            @PathVariable("cid") id: String,
+            @RequestParam("file", required = true) file: MultipartFile,
+            @RequestParam("content", required = false) content: String = ""
+    ): ResponseEntity<MessageResponse>{
+        val user = getCurrentUser()
+        val filename = Path.of("chats", id, file.originalFilename)
+        try{
+            Files.copy(file.inputStream, filename, StandardCopyOption.REPLACE_EXISTING)
+            val msg = userMessageService.createMessage(id, user.id, content, filename.toString(), ContentType.FILE)
+            return ResponseEntity.ok(MessageResponse(msg.id, msg.senderId, msg.conversationId, msg.content, msg.mediaUrl, msg.contentType,
+                    msg.createdAt, msg.updatedAt, msg.receivedAt, msg.readAt))
+        } catch (e: IOException){
+            throw BadRequestException("Invalid file")
         }
 
     }

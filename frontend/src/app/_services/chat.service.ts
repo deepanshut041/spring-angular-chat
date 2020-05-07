@@ -14,6 +14,7 @@ export class ChatService {
   public readonly fetch: Observable<number> = this._fetch.asObservable();
 
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+  fileOptions = { headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }) };
 
   constructor(private httpClient: HttpClient, private dataService: DataService) { }
 
@@ -24,7 +25,7 @@ export class ChatService {
       }))
   }
 
-  updateFetch(value){
+  updateFetch(value) {
     this._fetch.next(value)
   }
 
@@ -35,10 +36,10 @@ export class ChatService {
       }))
   }
 
-  fetchAllMessages(): Observable<any>{
-    console.log( )
+  fetchAllMessages(): Observable<any> {
+    console.log()
     return this.httpClient.post(`${environment.DOMAIN}/api/users/chat/messages`,
-    Array.from(this.dataService.getAllFriend().keys()), this.httpOptions)
+      Array.from(this.dataService.getAllFriend().keys()), this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
         this.dataService.updateUserMessages(msgs)
       }))
@@ -51,7 +52,16 @@ export class ChatService {
       }))
   }
 
-  getFriends(): Observable<FriendProfile[]>{
+  createMessageText(cid: string, content: string): Observable<UserMessage> {
+    return this.httpClient
+      .post(`${environment.DOMAIN}/api/users/chat/${cid}/messages/text?content=${content}`,{}, this.httpOptions)
+      .pipe(map((v: UserMessage) => {
+        this.dataService.updateUserMessages([v])
+        return v
+      }))
+  }
+
+  getFriends(): Observable<FriendProfile[]> {
     return this.dataService.getFriends()
   }
 
@@ -59,7 +69,7 @@ export class ChatService {
     return this.dataService.getAllFriend().get(id)
   }
 
-  getMessages(covId: string): Observable<UserMessage[]>{
+  getMessages(covId: string): Observable<UserMessage[]> {
     return this.dataService.getMessages(covId)
   }
 
