@@ -58,7 +58,7 @@ export class DataService {
       map(m => {
         let friends: FriendProfile[] = []
         m.forEach((v, k) => { friends.push(v) })
-        friends.sort((a, b) => a.lastMsgAt.getTime() - b.lastMsgAt.getTime())
+        // friends.sort((a, b) => a.lastMsgAt.getTime() - b.lastMsgAt.getTime())
         return friends
       })
     )

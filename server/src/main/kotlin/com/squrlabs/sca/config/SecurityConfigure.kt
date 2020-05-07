@@ -67,7 +67,7 @@ class SecurityConfigure(
                 .authenticationEntryPoint(RestAuthenticationEntryPoint())
                 .and().authorizeRequests()
                 .antMatchers("/", "/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
-                .antMatchers("/api/account/**", "/api/docs", "/login/oauth2/code/**").permitAll()
+                .antMatchers("/api/account/**", "/api/docs", "/login/oauth2/code/**", "/ws/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -37,7 +37,7 @@ export class AuthService {
     return this.http.post(`${environment.DOMAIN}/api/account/signin`, model, this.httpOptions)
       .pipe(map((response: SignInResponse) => {
         this.tokenStorage.saveToken(response.accessToken)
-        this.tokenStorage.saveUser(new UserProfile(response.email, response.name, response.imageUrl))
+        this.tokenStorage.saveUser(new UserProfile(response.id, response.email, response.name, response.imageUrl))
         return response
       }));
   }
