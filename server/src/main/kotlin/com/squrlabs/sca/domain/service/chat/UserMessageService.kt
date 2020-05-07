@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Service("userMessageService")
 class UserMessageServiceImpl(
@@ -22,6 +23,15 @@ class UserMessageServiceImpl(
         @Autowired val conversationRepository: ConversationRepository,
         @Autowired val userMessageRepository: UserMessageRepository
 ) : UserMessageService {
+    override fun getAllMessages(ids: List<String>, userId: String): List<UserMessageModel> {
+        val msgs = ArrayList<UserMessageModel>()
+        conversationRepository.findAllById(ids).map { conv->
+            if (conv.user1 == userId || conv.user2 == userId) {
+                userMessageRepository.findAllByConversationId(conv.id!!).map { msgs.add(UserMessageMapper.to(it)) }
+            }
+        }
+        return msgs
+    }
     override fun getMessages(id: String, userId: String, date: Date): List<UserMessageModel> {
         conversationRepository.findById(id).toNullable()?.let { convs ->
             if (convs.user1 == userId || convs.user2 == userId) {
@@ -81,4 +91,5 @@ interface UserMessageService {
     fun getMessages(id: String, userId: String, date: Date): List<UserMessageModel>
     fun updateMessages(id: String, convId: String, userId: String, receivedAt: Boolean): UserMessageModel
     fun createMessage(id: String, userId: String, content: String, mediaUrl: String, mediaType: ContentType): UserMessageModel
+    fun getAllMessages(ids: List<String>, userId: String): List<UserMessageModel>
 }

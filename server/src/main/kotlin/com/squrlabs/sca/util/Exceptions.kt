@@ -16,4 +16,5 @@ class OAuth2AuthenticationProcessingException : AuthenticationException {
     constructor(msg: String?) : super(msg) {}
 }
 
+@ResponseStatus(HttpStatus.NOT_FOUND)
 data class ResourceNotFoundException(val resourceName: String, val fieldName: String, val fieldValue: Any) : RuntimeException("$resourceName not found with $fieldName: $fieldValue")

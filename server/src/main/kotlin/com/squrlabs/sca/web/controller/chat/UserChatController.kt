@@ -47,6 +47,19 @@ class UserChatController(
         }
     }
 
+    @PostMapping("/messages")
+    fun getAllMessages(
+            @RequestBody ids: List<String>,
+            @RequestParam("from", required = false) from: String?
+    ): ResponseEntity<List<MessageResponse>> {
+        val user = getCurrentUser()
+        val messages = userMessageService.getAllMessages(ids, user.id)
+
+        return  ResponseEntity.ok(messages.map {
+            MessageResponse(it.id, it.senderId, it.conversationId, it.content, it.mediaUrl, it.contentType, it.createdAt, it.updatedAt, it.receivedAt, it.readAt)
+        })
+    }
+
     @GetMapping("/{cid}/block")
     fun blockUser(@PathVariable("cid") id: String): ResponseEntity<FriendProfileResponse>{
         val user = getCurrentUser()

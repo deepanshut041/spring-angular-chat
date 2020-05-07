@@ -56,7 +56,7 @@ class UserConversationServiceImpl(
         val users = userRepository.findAllById(friends.keys)
         return users.map {
             val profile = friends[it.id]!!
-            FriendProfileModel(it.id, it.email, it.name, it.imgUrl, profile.isBlocked, profile.blockerId)
+            FriendProfileModel(profile.id!!, it.email, it.name, it.imgUrl, profile.isBlocked, profile.blockerId)
         }
     }
 

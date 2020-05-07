@@ -7,4 +7,5 @@ import java.util.*
 interface UserMessageRepository: MongoRepository<UserMessageEntity, String> {
 
     fun findAllByConversationIdAndUpdatedAtAfter(id: String, date: Date): List<UserMessageEntity>
+    fun findAllByConversationId(id: String): List<UserMessageEntity>
 }
