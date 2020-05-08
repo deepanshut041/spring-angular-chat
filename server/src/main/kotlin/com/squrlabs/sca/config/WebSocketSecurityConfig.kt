@@ -18,5 +18,4 @@ class WebSocketSecurityConfig:AbstractSecurityWebSocketMessageBrokerConfigurer()
     override fun sameOriginDisabled(): Boolean {
         return true
     }
-
 }
