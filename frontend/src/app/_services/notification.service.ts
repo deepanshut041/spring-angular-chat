@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
 import { UserMessage } from '../_dtos/chat/UserMessage';
 import { FriendProfile } from '../_dtos/chat/FriendProfile';
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable()
 export class NotificationService {
@@ -13,7 +14,7 @@ export class NotificationService {
   stompClient: any;
   topic: string
 
-  constructor(private dataService: DataService, private userService: UserService) {
+  constructor(private dataService: DataService, private userService: UserService, private storageService: TokenStorageService) {
     this.topic = `/notifications/${this.userService.getProfile().id}`
   }
 
@@ -21,30 +22,23 @@ export class NotificationService {
     let ws = new SockJS(`${environment.DOMAIN}/ws`);
     this.stompClient = Stomp.over(ws);
     const _this = this;
-    _this.stompClient.connect({}, function (frame) {
-      _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
-        _this.onMessageReceived(sdkEvent);
-      });
-    }, this.errorCallBack);
-
-  }
-
-  errorCallBack(error) {
-    console.log("errorCallBack -> " + error)
-    setTimeout(() => {
-      this.suscribe();
-    }, 5000);
+    _this.stompClient.connect({ "Authorization": "Bearer " + this.storageService.getToken() },
+      function (frame) {
+        _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
+          _this.onMessageReceived(sdkEvent);
+        });
+      }, function (error) { setTimeout(() => _this.suscribe(), 5000); });
   }
 
   onMessageReceived(message) {
     let json = JSON.parse(message.body)
-    if(json['type'] == "USER_MESSAGE_ADDED" || json['type'] == "USER_MESSAGE_UPDATED"){
+    if (json['type'] == "USER_MESSAGE_ADDED" || json['type'] == "USER_MESSAGE_UPDATED") {
       let data = json['data'] as UserMessage
       this.dataService.updateUserMessages([data])
-    } else if(json['type'] == "USER_CONVERSATION_UPDATED" || json['type'] == "USER_CONVERSATION_ADDED"){
+    } else if (json['type'] == "USER_CONVERSATION_UPDATED" || json['type'] == "USER_CONVERSATION_ADDED") {
       let data = json['data'] as FriendProfile
       this.dataService.updateFriends([data])
-    } else{
+    } else {
       console.log(json)
     }
   }

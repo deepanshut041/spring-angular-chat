@@ -36,6 +36,7 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt:0.9.1")
 	implementation("org.springframework.security:spring-security-oauth2-client")
 	implementation("org.springframework.security:spring-security-oauth2-jose")
+	implementation("org.springframework.security:spring-security-messaging")
 
 	// Websocket
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
