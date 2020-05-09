@@ -1,7 +1,5 @@
 package com.squrlabs.sca.domain.model.user
 
-import com.squrlabs.sca.domain.model.user.AuthProvider
-
 data class UserModel(val id: String = "",
                      val name: String,
                      val email: String,

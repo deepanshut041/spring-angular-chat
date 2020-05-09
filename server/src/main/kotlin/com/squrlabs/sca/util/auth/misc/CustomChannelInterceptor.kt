@@ -16,7 +16,6 @@ class CustomChannelInterceptor(
         private val userService: UserService
 ) : ChannelInterceptor {
 
-
     override fun preSend(message: Message<*>, channel: MessageChannel): Message<*>? {
 
         val accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor::class.java)
@@ -37,7 +36,6 @@ class CustomChannelInterceptor(
         }
         return message
     }
-
 
     private fun getJwtFromRequest(bearerToken: String?): String? {
         bearerToken?.let {
