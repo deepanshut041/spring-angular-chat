@@ -14,6 +14,7 @@ class FileStorageServiceImpl() : FileStorageService {
     override fun store(files: List<MultipartFile>, chatId: String): List<FileModel> {
         val uploadedFiles = ArrayList<FileModel>()
         files.stream().map {
+            println("Hello")
             val path = Path.of(ROOT_URL, chatId)
             Files.copy(it.inputStream,
                     path.resolve(UUID.randomUUID().toString() + it.originalFilename!!.split(".").last()),

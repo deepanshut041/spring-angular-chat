@@ -60,6 +60,15 @@ export class ChatService {
       }))
   }
 
+  createMessageFile(cid: string, content: string, data:FormData): Observable<UserMessage> {
+    return this.httpClient
+      .post(`${environment.DOMAIN}/api/chat/${cid}/messages/files?content=${content}`, data)
+      .pipe(map((v: UserMessage) => {
+        this.dataService.updateUserMessages([v])
+        return v
+      }))
+  }
+
   getFriends(): Observable<FriendProfile[]> {
     return this.dataService.getFriends()
   }

@@ -49,18 +49,16 @@ export class ChatDetailComponent implements OnInit {
   }
 
   sendMessage(event) {
-    const files = !event.files ? [] : event.files.map((file) => {
-      return {
-        url: file.src,
-        type: file.type,
-        icon: 'file-text-outline',
-      };
-    });
+    const files = !event.files ? [] : event.files;
 
-    this.chatService.createMessageText(this.friendId, event.message).subscribe((v) => {
-      console.log(v);
-    })
-    // this.chatService()
+    let formData = new FormData();
+
+    if(files.length == 0){
+      this.chatService.createMessageText(this.friendId, event.message).subscribe()
+    } else {
+      formData.append('files', files);
+      this.chatService.createMessageFile(this.friendId, event.message, formData).subscribe()
+    }
   }
 
 

@@ -99,14 +99,14 @@ class ChatController(
         return ResponseEntity.ok( MessageResponseMapper.from(msg) )
     }
 
-    @PostMapping("/{cid}/messages/files")
+    @PostMapping("/{cid}/messages/files", consumes = ["multipart/form-data"])
     fun createMessageFile(
             @PathVariable("cid") id: String,
             @RequestParam("content", required = false) content: String = "",
-            @RequestParam("file", required = true) files: List<MultipartFile>
+            @RequestParam("files") files: Array<MultipartFile>
     ): ResponseEntity<MessageResponse>{
         val user = getCurrentUser()
-        val uploadedFiles = fileStorageService.store(files, id)
+        val uploadedFiles = fileStorageService.store(files.toList(), id)
         val msg = messageService.createMessage(id, user.id, content, uploadedFiles, ContentType.FILE)
         return ResponseEntity.ok(MessageResponseMapper.from(msg))
 
