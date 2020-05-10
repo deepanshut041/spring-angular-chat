@@ -1,5 +1,5 @@
 <div class="h-100">
-    <nb-chat [title]="friendProfile.name" status="basic" scrollBottom="true" style="height: 90vh;">
+    <nb-chat *ngIf="friendProfile" [title]="friendProfile.name" status="basic" scrollBottom="true" style="height: 90vh;">
         <nb-chat-message *ngFor="let msg of messages" [type]="msg.type" [message]="msg.text" [reply]="msg.reply"
             [sender]="msg.name" [date]="msg.date" [files]="msg.files" [quote]="msg.quote" [latitude]="msg.latitude"
             [longitude]="msg.longitude" [avatar]="msg.avatar">

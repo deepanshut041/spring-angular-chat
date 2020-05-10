@@ -29,7 +29,7 @@ class MessageServiceImpl(
     override fun getAllMessages(ids: List<String>, userId: String, updatedAt:Date): List<MessageModel> {
         val msgs = ArrayList<MessageModel>()
         chatRepository.findAllById(ids).map { chat -> 
-            if (chat.user1 == userId || chat.user2 == userId) return@map null             
+            if (chat.user1 != userId && chat.user2 != userId) return@map null
             messageRepository.findAllByConversationIdAndUpdatedAtAfter(chat.id!!, updatedAt).map { 
                 msgs.add(MessageMapper.to(it))
             }

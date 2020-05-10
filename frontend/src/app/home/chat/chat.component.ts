@@ -15,9 +15,6 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.notificationService.suscribe()
-    this.chatService.fetch.subscribe(v =>{
-      if(v != 100) this.router.navigateByUrl("/loading")
-    })
   }
 
 }

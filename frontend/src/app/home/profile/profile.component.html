@@ -1,1 +1,27 @@
-<p>profile works!</p>
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-lg-6 col-md-8 col-sm-10 col-12">
+            <nb-card class="text-center">
+                <nb-card-header><h2>Edit your profile</h2></nb-card-header>
+                <nb-card-body *ngIf="profile">
+                    <form>
+                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" (change)="uploadFile($event)" 
+                        #fileInput style="display:none;"/>
+                        <div class="profile-image" [ngStyle]="{'background-image': 'url(' + profile.imgUrl + ')'}">
+                            <div class="top-layer h-100 w-100 text-center">
+                                <nb-icon icon="edit" (click)="fileInput.click()"></nb-icon>
+                            </div>
+                        </div>
+                        <h3 class="text-center mt-3 mb-3">{{profile.name}}</h3>
+                        <button nbButton fullWidth outline status="primary" (click)="continue()" size="large" class="mt-3">
+                            Continue
+                        </button>
+                    </form>
+                </nb-card-body>
+                <nb-card-footer>
+                    <p><strong>Powered By: Deepanshu Tyagi</strong></p>
+                </nb-card-footer>
+            </nb-card>
+        </div>
+    </div>
+</div>
