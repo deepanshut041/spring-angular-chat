@@ -21,6 +21,7 @@ export class NotificationService {
   suscribe() {
     let ws = new SockJS(`${environment.DOMAIN}/ws`);
     this.stompClient = Stomp.over(ws);
+    this.stompClient.debug = () => {};
     const _this = this;
     _this.stompClient.connect({ "Authorization": "Bearer " + this.storageService.getToken() },
       function (frame) {

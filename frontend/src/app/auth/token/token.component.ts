@@ -26,7 +26,7 @@ export class TokenComponent implements OnInit {
 
   ngOnInit(): void {
     (async () => {
-      await delay(2000);
+      await delay(5000);
       this.userService.fetchProfile().subscribe(
         (profile: UserProfile) => {
           this.profile = profile
