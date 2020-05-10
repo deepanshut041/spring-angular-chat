@@ -54,7 +54,6 @@ export class ChatDetailComponent implements OnInit {
 
     this.chatService.createMessageText(this.friendId, event.message).subscribe((v)=>{
     })
-    // this.chatService()
   }
 
   
