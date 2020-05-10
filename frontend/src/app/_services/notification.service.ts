@@ -32,7 +32,7 @@ export class NotificationService {
 
   onMessageReceived(message) {
     let json = JSON.parse(message.body)
-    if (json['type'] == "USER_MESSAGE_ADDED" || json['type'] == "USER_MESSAGE_UPDATED") {
+    if (json['type'] == "USER_MESSAGE_ADDED") {
       let data = json['data'] as UserMessage
       this.dataService.updateUserMessages([data])
     } else if (json['type'] == "USER_CONVERSATION_UPDATED" || json['type'] == "USER_CONVERSATION_ADDED") {

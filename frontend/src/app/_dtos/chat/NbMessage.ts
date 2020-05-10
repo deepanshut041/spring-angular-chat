@@ -15,9 +15,9 @@ export class NbMessage {
     constructor(msg: UserMessage) {
         this.date = msg.createdAt
         this.text = msg.content
-        if (msg.contentType != 'TEXT') {
+        if (msg.contentType == 'FILE') {
             this.type = "file"
-            this.files = [{ "url": msg.mediaUrl }]
+            this.files = msg.files
         } else {
             this.type = "text"
         }

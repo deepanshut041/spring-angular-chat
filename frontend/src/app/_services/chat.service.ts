@@ -19,7 +19,7 @@ export class ChatService {
   constructor(private httpClient: HttpClient, private dataService: DataService) { }
 
   fetchFriends(): Observable<any> {
-    return this.httpClient.get(`${environment.DOMAIN}/api/users/chat`, this.httpOptions)
+    return this.httpClient.get(`${environment.DOMAIN}/api/chat`, this.httpOptions)
       .pipe(map((friends: FriendProfile[]) => {
         this.dataService.updateFriends(friends)
       }))
@@ -29,16 +29,8 @@ export class ChatService {
     this._fetch.next(value)
   }
 
-  createFriend(email: String): Observable<any> {
-    return this.httpClient.get(`${environment.DOMAIN}/api/users/chat/new?email=${email}`, this.httpOptions)
-      .pipe(map((friend: FriendProfile) => {
-        this.dataService.updateFriends([friend])
-      }))
-  }
-
   fetchAllMessages(): Observable<any> {
-    console.log()
-    return this.httpClient.post(`${environment.DOMAIN}/api/users/chat/messages`,
+    return this.httpClient.post(`${environment.DOMAIN}/api/chat/messages`,
       Array.from(this.dataService.getAllFriend().keys()), this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
         this.dataService.updateUserMessages(msgs)
@@ -46,15 +38,22 @@ export class ChatService {
   }
 
   fetchMessages(covId: string): Observable<any> {
-    return this.httpClient.get(`${environment.DOMAIN}/api/users/chat/${covId}/messages`, this.httpOptions)
+    return this.httpClient.get(`${environment.DOMAIN}/api/chat/${covId}/messages`, this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
         this.dataService.updateUserMessages(msgs)
       }))
   }
 
+  createFriend(email: String): Observable<any> {
+    return this.httpClient.post(`${environment.DOMAIN}/api/chat?email=${email}`, this.httpOptions)
+      .pipe(map((friend: FriendProfile) => {
+        this.dataService.updateFriends([friend])
+      }))
+  }
+
   createMessageText(cid: string, content: string): Observable<UserMessage> {
     return this.httpClient
-      .post(`${environment.DOMAIN}/api/users/chat/${cid}/messages/text?content=${content}`,{}, this.httpOptions)
+      .post(`${environment.DOMAIN}/api/chat/${cid}/messages/text?content=${content}`,{}, this.httpOptions)
       .pipe(map((v: UserMessage) => {
         this.dataService.updateUserMessages([v])
         return v

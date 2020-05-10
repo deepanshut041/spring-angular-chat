@@ -32,7 +32,7 @@ export class TokenComponent implements OnInit {
           this.profile = profile
           this.loading = false
         }, (err) => {
-          this.router.navigateByUrl("/auth/login")
+          this.router.navigateByUrl("/auth/signin")
         })
     })();
   }

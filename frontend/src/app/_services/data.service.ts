@@ -24,7 +24,7 @@ export class DataService {
     newFriends.map(v => {
       let friend = friends.get(v.id)
       if (friend) {
-        friend.update(v.id, v.email, v.name, v.imgUrl, v.isBlocked, v.blockedBy, v.updatedAt)
+        friend.update(v.id, v.email, v.name, v.imgUrl, v.blockedBy, v.updatedAt)
       } else { friends.set(v.id, v) }
     })
     this._friends.next(friends)
@@ -35,18 +35,18 @@ export class DataService {
     let friends = this._friends.value
 
     msgs.forEach((msg, k) => {
-      let friend = friends.get(msg.conversationId)
+      let friend = friends.get(msg.chatId)
       if (friend.lastMsgAt < msg.createdAt) { friend.updateConv(msg.content, msg.createdAt) }
       // if (!msg.readAt) { friend.incrementUnread() }
     })
     this._friends.next(friends)
   }
 
-  getMessages(covId: String): Observable<UserMessage[]> {
+  getMessages(chatId: String): Observable<UserMessage[]> {
     return this._userMessages.pipe(
       map(m => {
         let msgs: UserMessage[] = []
-        m.forEach((v, k) => { if (v.conversationId == covId) msgs.push(v) })
+        m.forEach((v, k) => { if (v.chatId == chatId) msgs.push(v) })
         // msgs.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
         return msgs
       })

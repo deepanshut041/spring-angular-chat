@@ -3,20 +3,17 @@ export class FriendProfile {
     email: string
     name: string
     imgUrl: string
-    isBlocked: boolean
     blockedBy: string
     lastMsg: string = ""
     lastMsgAt: Date
     unreadMsgs: number = 0
     updatedAt: Date
-    fetched: boolean = false
 
-    constructor(id: string, email: string, name: string, imgUrl: string, isBlocked: boolean, blockedBy: string, updatedAt: string) {
+    constructor(id: string, email: string, name: string, imgUrl: string, blockedBy: string, updatedAt: string) {
         this.id = id
         this.email = email
         this.name = name
         this.imgUrl = imgUrl
-        this.isBlocked = isBlocked
         this.blockedBy = blockedBy
         this.updatedAt = new Date(updatedAt)
     }
@@ -26,12 +23,11 @@ export class FriendProfile {
         this.lastMsgAt = lastMsgAt
     }
 
-    update(id: string, email: string, name: string, imgUrl: string, isBlocked: boolean, blockedBy: string, updatedAt: Date){
+    update(id: string, email: string, name: string, imgUrl: string, blockedBy: string, updatedAt: Date){
         this.id = id
         this.email = email
         this.name = name
         this.imgUrl = imgUrl
-        this.isBlocked = isBlocked
         this.blockedBy = blockedBy
         this.updatedAt = updatedAt
     }

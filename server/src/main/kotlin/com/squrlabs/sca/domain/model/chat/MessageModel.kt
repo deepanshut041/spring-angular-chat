@@ -6,7 +6,7 @@ import java.util.*
 data class MessageModel(
         val id: String?,
         val senderId: String,
-        val conversationId: String,
+        val chatId: String,
         val content: String,
         val files: List<FileModel>,
         val contentType: ContentType,

@@ -1,7 +1,6 @@
 package com.squrlabs.sca.data.entity.chat
 
 import com.squrlabs.sca.domain.model.chat.ContentType
-import com.squrlabs.sca.domain.model.chat.FileModel
 import com.squrlabs.sca.domain.model.chat.MessageModel
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
@@ -25,7 +24,7 @@ object MessageMapper {
     fun to(entity: MessageEntity) = MessageModel(
             id = entity.id!!,
             senderId = entity.senderId,
-            conversationId = entity.conversationId,
+            chatId = entity.conversationId,
             content = entity.content,
             files = entity.files.map { FileMapper.to(it) },
             contentType = entity.contentType,
