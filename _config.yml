@@ -1,1 +1,10 @@
-theme: jekyll-theme-minimal
+theme: jekyll-theme-cayman
+title: Spring Angular Chat
+show_downloads: false
+description: This Repository contains relatime chat built on spring and angular with Stomp.
+plugins:
+  - jemoji
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
