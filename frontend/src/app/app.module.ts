@@ -20,7 +20,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    NbThemeModule.forRoot({ name: 'corporate' }),
+    NbThemeModule.forRoot({ name: 'cosmic' }),
     NbMenuModule.forRoot(),
     NbDialogModule.forRoot(),
     NbLayoutModule,
